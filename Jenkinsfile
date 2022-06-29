@@ -9,14 +9,19 @@ pipeline {
            }
            stage('Build Image') {
                 steps {
-                sh ' docker build -t heartdisease:predictionapp .'
+                sh ' docker build -t disease:v1 .'
                 }
            }
            stage('Run Image') {
                 steps {
-                sh ' docker run -p 8501:8501 heartdiseaseapp:predictionapp'
+                sh ' docker run -d -p 8501:8501 --name disease disease:v1'
                 }
            }
-           
+           stage('Testing'){
+                steps {
+                    echo 'Process Complete..'
+
+                    }
+           }
     }
 }
