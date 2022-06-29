@@ -2,56 +2,36 @@
 def gv
 def aws_id
 pipeline {
-    
-   
-    stages {
-        stage('init'){
-            agent any
-            steps{
-                script{
-                    gv = load "script.groovy"
-                    aws_id = gv.returncreds()
-                    
-                }
-            }
-        }
-
-       stage('Cleanup Workspace') {
-            agent any
-            steps {
-                cleanWs()
-                sh """
-                echo "Cleaned Up Workspace For Project"
-                """
-            }
-        }
+    agent any
+    stages{
         
-        stage('Build') {
-            agent any
+         stage('Clone Repository') {
+            //cloning repository to our workspace
             steps {
                 // Get some code from a GitHub repository
-                git 'https://github.com/amarkarak1/Heart_Disease_prediction.git'
-
-                
+                //git 'https://github.com/amarkarak1/Heart_Disease_prediction.git'
+                checkout scm
                  }
-        }
-         
-        
-        
-        
-  
+            }
+       
+       
     // Building Docker images
-    stage('Building image') {
-        agent any
-      steps{
-        script {
-            dockerImage = sh " docker build -t Heart_Disease_prediction ."
-        }
-      }
-    }
-   
-  
-    
+        stage('Building Image') {
+          steps{
 
-    }
+                 sh ' sudo docker build -t Heart_Disease_predictionapp . '
+          }
+        }
+        
+        
+         // running  Docker images
+        stage('Run Image') {
+          steps{
+
+                sh ' sudo docker run -d -p 8501:8501 --name Heart_Disease_prediction Heart_Disease_predictionapp '
+          }
+        }
+        
+        
+        
 }
