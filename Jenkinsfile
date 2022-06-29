@@ -9,12 +9,12 @@ pipeline {
            }
            stage('Build Image') {
                 steps {
-                sh ' docker build -t disease:v1 .'
+                sh ' docker build -t disease:latest .'
                 }
            }
            stage('Run Image') {
                 steps {
-                sh ' docker run -d -p 8501:8501 --name disease disease:v1'
+                sh ' docker run -p 8501:8501 disease:latest'
                 }
            }
            stage('Testing'){
