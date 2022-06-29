@@ -9,19 +9,14 @@ pipeline {
            }
            stage('Build Image') {
                 steps {
-                sh ' docker build -t HdR:v1 .'
+                sh ' docker build -t heartdisease:latest .'
                 }
            }
            stage('Run Image') {
                 steps {
-                sh ' docker run -d -p 8501:8501 --name HdR HdRapp:v1'
+                sh ' docker run -d -p 8501:8501 --name heartdisease heartdiseaseapp:latest'
                 }
            }
-           stage('Testing'){
-                steps {
-                    echo 'Process Complete..'
-
-                    }
-           }
+           
     }
 }
