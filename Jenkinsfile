@@ -14,7 +14,7 @@ pipeline {
            }
            stage('Run Image') {
                 steps {
-                sh ' docker run -d -p 8501:8501 --name heartdisease heartdiseaseapp:predictionapp'
+                sh ' docker run -p 8501:8501 heartdiseaseapp:predictionapp'
                 }
            }
            
