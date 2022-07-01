@@ -1,19 +1,19 @@
 FROM python:3.7
 
+cmd mkdir /final
+
+copy . /final
+
 WORKDIR /final
-
-COPY requirements.txt ./requirements.txt
-
-RUN pip install -r requirements.txt
 
 EXPOSE 8501
 
-COPY . /final
 
-ENTRYPOINT ["streamlit", "run"]
+RUN pip3 install -r requirements.txt
 
-CMD ["final.py"]
 
+
+CMD streamlit run final.py
 
 
 
