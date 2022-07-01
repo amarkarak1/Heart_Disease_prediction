@@ -6,15 +6,15 @@ pipeline {
                 steps {
                 checkout scm
                 }
-           }
+             }
            stage('Build Image') {
                 steps {
-                sh ' docker build -t disease:latest .'
+                sh ' docker build -t diseaseapp:latest .'
                 }
            }
            stage('Run Image') {
                 steps {
-                sh ' docker run -p 8501:8501 disease:latest'
+                sh '  docker run -d -p 8501:8501 --name disease diseaseapp:latest'
                 }
            }
            stage('Testing'){
